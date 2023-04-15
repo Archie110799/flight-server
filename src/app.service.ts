@@ -3,7 +3,7 @@ import puppeteer from 'puppeteer';
 
 @Injectable()
 export class AppService {
-  getHello() {
+  getHello(req) {
     getBrowserProxy: async (proxy) => {
       return await puppeteer.launch({
         headless: true,
@@ -23,8 +23,7 @@ export class AppService {
         let dataObj = {};
 
         const page = await browser.newPage();
-        const url =
-          'https://www.vemaybay.vn/flight-result?request=HANSGN25042023-1-0-0';
+        const url = `https://www.vemaybay.vn/flight-result?request=${req}`;
         await page.goto(url);
         const res = await page.$$eval('.ftl-flight-main', (rows) => {
           return Array.from(rows, (row) => {
