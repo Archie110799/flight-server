@@ -26,8 +26,6 @@ export class AppService {
         const url =
           'https://www.vemaybay.vn/flight-result?request=HANSGN25042023-1-0-0';
         await page.goto(url);
-        // Wait and click on first result
-
         const res = await page.$$eval('.ftl-flight-main', (rows) => {
           return Array.from(rows, (row) => {
             const columns = row.querySelectorAll('ul');
@@ -35,7 +33,20 @@ export class AppService {
           });
         });
 
-        dataObj['flightList'] = res[0];
+        const formatData = [];
+        for (let index = 0; index < res[0].length; index += 2) {
+          const flightInfo = res[0][index]
+            .split('\n')
+            .filter((item, index) => index !== 3);
+          const flightPrice = res[0][index + 1]
+            .split('\n')
+            .filter((item, index) => index !== 2);
+
+          const element = flightInfo.concat(flightPrice);
+          formatData.push(element);
+        }
+
+        dataObj['flightList'] = formatData;
 
         await browser.close();
         return resolve(dataObj);
