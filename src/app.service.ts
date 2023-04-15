@@ -33,16 +33,19 @@ export class AppService {
         });
 
         const formatData = [];
-        for (let index = 0; index < res[0].length; index += 2) {
-          const flightInfo = res[0][index]
-            .split('\n')
-            .filter((item, index) => index !== 3);
-          const flightPrice = res[0][index + 1]
-            .split('\n')
-            .filter((item, index) => index !== 2);
 
-          const element = flightInfo.concat(flightPrice);
-          formatData.push(element);
+        if (res[0]?.length) {
+          for (let index = 0; index < res[0]?.length; index += 2) {
+            const flightInfo = res[0][index]
+              .split('\n')
+              .filter((item, index) => index !== 3);
+            const flightPrice = res[0][index + 1]
+              .split('\n')
+              .filter((item, index) => index !== 2);
+
+            const element = flightInfo.concat(flightPrice);
+            formatData.push(element);
+          }
         }
 
         dataObj['flightList'] = formatData;
