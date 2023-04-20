@@ -71,3 +71,16 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+# TodoModule
+nest g module Todo
+# Using alias: nest g mo Todo
+
+# TodoService
+nest g service Todo
+# Using alias: nest g s Todo
+
+# TodoController
+nest g controller Todo 
+# Using alias: nest g co Todo 
+nest generate controller auth/controller/
