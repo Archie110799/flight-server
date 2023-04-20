@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './user.schema';
 import { CreateUserDto } from './user.dto';
+import HttpException from 'src/common/exception/http-exception';
+import { HttpConstants, Message } from 'src/common/constants';
 
 @Injectable()
 export class UserService {
@@ -12,7 +14,11 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const createdUser = await this.userModel.create(createUserDto);
-    return createdUser;
+    if (!createdUser) {
+      throw new HttpException(404, Message.error[404]);
+    }else{
+      return createdUser;
+    }
   }
 
   async findAll(): Promise<User[]> {
@@ -28,5 +34,26 @@ export class UserService {
       .findByIdAndRemove({ _id: id })
       .exec();
     return deletedCat;
+  }
+
+  async login(infoUser: ILogin): Promise<User> {
+    const user = await this.userModel
+      .findOne({ name: new RegExp('^' + infoUser?.name + '$', 'i') })
+      .exec();
+    if (!user) {
+      throw new HttpException(
+        HttpConstants.HTTP_STATUS_NOT_FOUND,
+        Message.error[404],
+      );
+    }
+
+    if (infoUser?.password === user.password) {
+      return user;
+    } else {
+      throw new HttpException(
+        HttpConstants.HTTP_STATUS_UNAUTHORIZED,
+        Message.error.PASSWORD_NOT_MATCHED,
+      );
+    }
   }
 }

@@ -8,9 +8,15 @@ import { User } from './user.schema';
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @Post('/login')
+  async login(@Body() infoUser: CreateUserDto) {
+    return this.userService.login(infoUser);
+  }
+
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
-    await this.userService.create(createUserDto);
+    return this.userService.create(createUserDto);
   }
   @Get()
   async findAll(): Promise<User[]> {
@@ -27,3 +33,5 @@ export class UserController {
     return this.userService.delete(id);
   }
 }
+
+
