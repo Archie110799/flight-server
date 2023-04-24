@@ -7,7 +7,8 @@ import { UserModule } from './user/user.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb+srv://admin:admin@cluster-flight.lm16jaz.mongodb.net/test',
+      // 'mongodb+srv://admin:admin@cluster-flight.lm16jaz.mongodb.net/test',
+      'mongodb://localhost:27017/',
     ),
     UserModule,
   ],
