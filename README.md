@@ -84,3 +84,11 @@ nest g service Todo
 nest g controller Todo 
 # Using alias: nest g co Todo 
 nest generate controller auth/controller/
+
+
+# Lib
+
+npm i @nestjs/swagger swagger-ui-express dotenv axios puppeteer rxjs
+npm i @nestjs/typeorm typeorm 
+npm i @nestjs/mongoose mongoose
+npm i class-validator class-transformer

@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
+import { FlightModule } from './flight/flight.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { UserModule } from './user/user.module';
       'mongodb://localhost:27017/',
     ),
     UserModule,
+    FlightModule,
   ],
   controllers: [AppController],
   providers: [AppService],

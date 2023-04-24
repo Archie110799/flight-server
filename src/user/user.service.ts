@@ -16,7 +16,7 @@ export class UserService {
     const createdUser = await this.userModel.create(createUserDto);
     if (!createdUser) {
       throw new HttpException(404, Message.error[404]);
-    }else{
+    } else {
       return createdUser;
     }
   }
