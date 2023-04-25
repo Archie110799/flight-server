@@ -1,10 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './user.schema';
 import { CreateUserDto } from './user.dto';
-import HttpException from 'src/common/exception/http-exception';
-import { HttpConstants, Message } from 'src/common/constants';
 
 @Injectable()
 export class UserService {
@@ -13,11 +11,21 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const createdUser = await this.userModel.create(createUserDto);
-    if (!createdUser) {
-      throw new HttpException(404, Message.error[404]);
-    } else {
-      return createdUser;
+    try {
+      const createdUser = await this.userModel.create(createUserDto);
+      if (!createdUser) {
+        throw new HttpException('NOT_MODIFIED', HttpStatus.NOT_MODIFIED);
+      } else {
+        return createdUser;
+      }
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          message: error?.message,
+        },
+        HttpStatus.FORBIDDEN,
+      );
     }
   }
 
@@ -42,8 +50,11 @@ export class UserService {
       .exec();
     if (!user) {
       throw new HttpException(
-        HttpConstants.HTTP_STATUS_NOT_FOUND,
-        Message.error[404],
+        {
+          status: HttpStatus.FORBIDDEN,
+          message: 'FORBIDDEN',
+        },
+        HttpStatus.FORBIDDEN,
       );
     }
 
@@ -51,8 +62,11 @@ export class UserService {
       return user;
     } else {
       throw new HttpException(
-        HttpConstants.HTTP_STATUS_UNAUTHORIZED,
-        Message.error.PASSWORD_NOT_MATCHED,
+        {
+          status: HttpStatus.UNAUTHORIZED,
+          message: 'UNAUTHORIZED',
+        },
+        HttpStatus.UNAUTHORIZED,
       );
     }
   }

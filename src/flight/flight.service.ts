@@ -1,8 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Flight } from './flight.schema';
-import HttpException from 'src/common/exception/http-exception';
 import { CreateFlightDto } from './flight.dto';
 import { Message } from 'src/common/constants';
 
@@ -13,11 +12,21 @@ export class FlightService {
   ) {}
 
   async create(createFlightDto: CreateFlightDto): Promise<Flight> {
-    const createdUser = await this.flightModel.create(createFlightDto);
-    if (!createdUser) {
-      throw new HttpException(404, Message.error[404]);
-    } else {
-      return createdUser;
+    try {
+      const createdFlight = await this.flightModel.create(createFlightDto);
+      if (!createdFlight) {
+        throw new HttpException('NOT_MODIFIED', HttpStatus.NOT_MODIFIED);
+      } else {
+        return createdFlight;
+      }
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          message: error?.message,
+        },
+        HttpStatus.FORBIDDEN,
+      );
     }
   }
 
