@@ -92,3 +92,6 @@ npm i @nestjs/swagger swagger-ui-express dotenv axios puppeteer rxjs
 npm i @nestjs/typeorm typeorm 
 npm i @nestjs/mongoose mongoose
 npm i class-validator class-transformer
+
+# Craw
+https://www.zenrows.com/blog/puppeteer-web-scraping#avoid-geoblocking-with-premium-proxies

@@ -4,7 +4,7 @@ import { FlightService } from './flight.service';
 import { Flight } from './flight.schema';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('flight')
+@ApiTags('Flight')
 @Controller('flight')
 export class FlightController {
   constructor(private readonly flightService: FlightService) {}
@@ -15,6 +15,11 @@ export class FlightController {
   @Get()
   async findAll(): Promise<Flight[]> {
     return this.flightService.findAll();
+  }
+
+  @Get(':userId')
+  async findAllbyUser(@Param('userId') userId: string): Promise<Flight[]> {
+    return this.flightService.findAllbyUser(userId);
   }
 
   @Get(':id')

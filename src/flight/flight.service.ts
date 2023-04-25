@@ -25,6 +25,10 @@ export class FlightService {
     return this.flightModel.find().exec();
   }
 
+  async findAllbyUser(userId: string): Promise<Flight[]> {
+    return this.flightModel.find({ userId }).exec();
+  }
+
   async findOne(id: string): Promise<Flight> {
     return this.flightModel.findOne({ _id: id }).exec();
   }

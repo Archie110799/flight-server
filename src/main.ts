@@ -2,20 +2,19 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { logger } from './common/middleware/logger.middleware';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe({transform: true}));
-
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   const config = new DocumentBuilder()
-    .setTitle('Flight example')
-    .setDescription('The flight API description')
+    .setTitle('Flight Server')
+    .setDescription('The Flight API - Flight with me')
     .setVersion('1.0')
     .addTag('Flight')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-
   await app.listen(3000);
 }
 bootstrap();
