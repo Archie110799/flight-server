@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { Type } from 'class-transformer';
+import mongoose, { HydratedDocument, ObjectId } from 'mongoose';
+import { User } from 'src/user/user.schema';
 
 export type FlightDocument = HydratedDocument<Flight>;
 
@@ -7,8 +9,9 @@ export type FlightDocument = HydratedDocument<Flight>;
   timestamps: true,
 })
 export class Flight {
-  @Prop()
-  userId: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  @Type(() => User)
+  userId: User;
 
   @Prop()
   name: string;

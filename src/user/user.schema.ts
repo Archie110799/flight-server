@@ -30,6 +30,11 @@ export class User {
     required: true,
   })
   phone: string;
+
+  @Prop({
+    required: true,
+  })
+  type: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
