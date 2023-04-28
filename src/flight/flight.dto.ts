@@ -13,12 +13,6 @@ export class CreateFlightDto {
   readonly adults: Array<IAdults>;
   readonly children: number;
   readonly babies: number;
-
-  @Type(() => Date)
-  @IsDate()
-  readonly dateFrom: Date;
-
-  @Type(() => Date)
-  @IsDate()
-  readonly dateTo: Date;
+  readonly dateFrom: string;
+  readonly dateTo: string;
 }

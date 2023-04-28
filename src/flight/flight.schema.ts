@@ -44,10 +44,10 @@ export class Flight {
   babies: number;
 
   @Prop()
-  dateFrom: Date;
+  dateFrom: string;
 
   @Prop()
-  dateTo: Date;
+  dateTo: string;
 }
 
 export const FlightSchema = SchemaFactory.createForClass(Flight);
