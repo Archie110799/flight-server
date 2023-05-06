@@ -1,4 +1,15 @@
-import { Body, Controller, Post, Get, Param, Delete, HttpCode } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Get,
+  Param,
+  Delete,
+  HttpCode,
+  Patch,
+  Put,
+  Res,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './user.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -29,10 +40,13 @@ export class UserController {
     return this.userService.findOne(id);
   }
 
+  @Put('/:id')
+  async update(@Param('id') id, @Body() user: User) {
+    return this.userService.update(id, user);
+  }
+
   @Delete(':id')
   async delete(@Param('id') id: string) {
     return this.userService.delete(id);
   }
 }
-
-

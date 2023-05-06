@@ -4,4 +4,5 @@ export class CreateUserDto {
   readonly email: string;
   readonly gender: number;
   readonly phone: string;
+  readonly type: number;
 }

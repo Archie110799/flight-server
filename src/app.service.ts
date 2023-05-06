@@ -4,19 +4,6 @@ import puppeteer from 'puppeteer';
 @Injectable()
 export class AppService {
   getHello(req) {
-    getBrowserProxy: async (proxy) => {
-      return await puppeteer.launch({
-        headless: true,
-        ignoreHTTPSErrors: true,
-        args: [
-          '--proxy-server=' + proxy,
-          '--no-sandbox',
-          '--disable-setuid-sandbox',
-          '--start-maximized',
-        ],
-      });
-    };
-
     return new Promise(async (resolve, reject) => {
       try {
         const browser = await puppeteer.launch();

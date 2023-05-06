@@ -37,6 +37,12 @@ export class UserService {
     return this.userModel.findOne({ _id: id }).exec();
   }
 
+  async update(id, user: User): Promise<User> {
+    return await this.userModel
+      .findByIdAndUpdate(id, user, { new: true })
+      .exec();
+  }
+
   async delete(id: string) {
     const deletedCat = await this.userModel
       .findByIdAndRemove({ _id: id })
@@ -70,4 +76,10 @@ export class UserService {
       );
     }
   }
+}
+
+function Args(
+  arg0: string,
+): (target: UserService, propertyKey: 'updateUser', parameterIndex: 0) => void {
+  throw new Error('Function not implemented.');
 }
